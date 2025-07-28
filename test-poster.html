@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CineAI Studio Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="/blocks/movie-poster-generator/movie-poster-generator.css">
+</head>
+<body>
+    <header></header>
+    <main>
+        <div class="section">
+            <div class="movie-poster-generator block" data-block-name="movie-poster-generator">
+                <div>
+                    <div>Movie Poster Generator</div>
+                </div>
+                <div>
+                    <div>Test content for the block</div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer></footer>
+    
+    <script type="module">
+        import { decorateMain } from '/scripts/scripts.js';
+        decorateMain(document.querySelector('main'));
+    </script>
+</body>
+</html>
