@@ -11,14 +11,14 @@ function createControlsPanel() {
     <div class="control-group">
       <label for="movie-genre">Genre</label>
       <div class="genre-tags">
-        <button class="genre-tag" data-genre="action">Action</button>
-        <button class="genre-tag" data-genre="drama">Drama</button>
-        <button class="genre-tag" data-genre="horror">Horror</button>
-        <button class="genre-tag" data-genre="comedy">Comedy</button>
-        <button class="genre-tag" data-genre="sci-fi">Sci-Fi</button>
-        <button class="genre-tag" data-genre="romance">Romance</button>
-        <button class="genre-tag" data-genre="thriller">Thriller</button>
-        <button class="genre-tag" data-genre="fantasy">Fantasy</button>
+        <button class="genre-tag" data-genre="action"><span>Action</span></button>
+        <button class="genre-tag" data-genre="drama"><span>Drama</span></button>
+        <button class="genre-tag" data-genre="horror"><span>Horror</span></button>
+        <button class="genre-tag" data-genre="comedy"><span>Comedy</span></button>
+        <button class="genre-tag" data-genre="sci-fi"><span>Sci-Fi</span></button>
+        <button class="genre-tag" data-genre="romance"><span>Romance</span></button>
+        <button class="genre-tag" data-genre="thriller"><span>Thriller</span></button>
+        <button class="genre-tag" data-genre="fantasy"><span>Fantasy</span></button>
       </div>
     </div>
     
