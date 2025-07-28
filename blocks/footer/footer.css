@@ -1,49 +1,31 @@
 footer {
-  background: var(--gradient-glass);
-  backdrop-filter: blur(20px);
-  border-top: 1px solid var(--glass-border);
+  background-color: var(--background-alt);
+  border-top: 1px solid var(--border-subtle);
   font-size: var(--body-font-size-xs);
-  position: relative;
-  margin-top: 80px;
-  box-shadow: 
-    0 -4px 20px rgb(0 0 0 / 20%),
-    inset 0 1px 0 rgb(255 255 255 / 10%);
-}
-
-footer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--gradient-accent);
-  opacity: 0.6;
+  margin-top: 120px;
 }
 
 footer .footer > div {
   margin: auto;
   max-width: 1200px;
   padding: 40px 24px 24px;
-  position: relative;
 }
 
 footer .footer p {
   margin: 0;
-  color: var(--text-color);
+  color: var(--text-secondary);
   text-align: center;
-  opacity: 0.8;
 }
 
 footer .footer a {
-  color: var(--neon-blue);
+  color: var(--accent-primary);
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: color 0.2s ease;
 }
 
 footer .footer a:hover {
-  color: var(--neon-orange);
-  text-shadow: 0 0 10px rgb(255 107 53 / 50%);
+  color: var(--accent-hover);
+  text-decoration: underline;
 }
 
 @media (width >= 900px) {

@@ -8,6 +8,10 @@ helix-importer-ui
 *.bak
 .idea
 .env
+
+# AI Services - potentially contains API keys
+scripts/ai-services.js
+scripts/ai-services-config.js
 # API Keys and secrets
 ai-services-config.js
 *-secure.js

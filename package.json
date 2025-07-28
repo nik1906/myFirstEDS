@@ -20,11 +20,12 @@
   },
   "homepage": "https://github.com/adobe/aem-boilerplate#readme",
   "devDependencies": {
+    "@babel/core": "7.26.0",
     "@babel/eslint-parser": "7.28.0",
     "eslint": "8.57.1",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.32.0",
-    "stylelint": "16.22.0",
-    "stylelint-config-standard": "38.0.0"
+    "stylelint": "15.11.0",
+    "stylelint-config-standard": "34.0.0"
   }
 }

@@ -1,25 +1,12 @@
 /* header and nav layout */
 header .nav-wrapper {
-  background: var(--gradient-glass);
-  backdrop-filter: blur(20px);
+  background-color: var(--surface-color);
   width: 100%;
   z-index: 1000;
   position: fixed;
-  border-bottom: 1px solid var(--glass-border);
-  box-shadow: 
-    0 4px 20px rgb(0 0 0 / 20%),
-    inset 0 1px 0 rgb(255 255 255 / 10%);
-}
-
-header .nav-wrapper::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--gradient-accent);
-  opacity: 0.6;
+  border-bottom: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(8px);
 }
 
 header nav {
@@ -35,7 +22,6 @@ header nav {
   height: var(--nav-height);
   padding: 0 24px;
   font-family: var(--body-font-family);
-  position: relative;
 }
 
 header nav[aria-expanded='true'] {

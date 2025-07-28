@@ -1,11 +1,11 @@
 export default function decorate(block) {
   // Clear the block and create the hero structure
   block.innerHTML = '';
-  
+
   // Create the hero content
   const heroContent = document.createElement('div');
   heroContent.className = 'studio-hero-content';
-  
+
   heroContent.innerHTML = `
     <h1>CineAI Studio</h1>
     <p class="subtitle">Transform your creative vision into stunning cinematic reality with AI-powered movie production tools</p>
@@ -30,15 +30,15 @@ export default function decorate(block) {
       </div>
     </div>
   `;
-  
+
   block.appendChild(heroContent);
-  
+
   // Add subtle scroll animations
   const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px',
   };
-  
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -47,7 +47,7 @@ export default function decorate(block) {
       }
     });
   }, observerOptions);
-  
+
   // Animate feature cards on scroll
   const featureCards = block.querySelectorAll('.feature-card');
   featureCards.forEach((card, index) => {
@@ -56,14 +56,14 @@ export default function decorate(block) {
     card.style.transition = `opacity 0.6s ease ${index * 0.2}s, transform 0.6s ease ${index * 0.2}s`;
     observer.observe(card);
   });
-  
+
   // Add interactive hover effects for CTA buttons
   const ctaButtons = block.querySelectorAll('.cta-button');
   ctaButtons.forEach((button) => {
     button.addEventListener('mouseenter', () => {
       button.style.transform = 'translateY(-2px) scale(1.05)';
     });
-    
+
     button.addEventListener('mouseleave', () => {
       button.style.transform = 'translateY(0) scale(1)';
     });

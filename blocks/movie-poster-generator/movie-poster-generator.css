@@ -1,52 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-
 .movie-poster-generator {
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #000000 100%);
+  background-color: var(--background-color);
   padding: 4rem 2rem;
-  min-height: 100vh;
-  color: white;
-  position: relative;
-  overflow: hidden;
-  font-family: 'Space Grotesk', sans-serif;
-}
-
-/* Animated background particles */
-.movie-poster-generator::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 0, 150, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(0, 150, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 60% 70%, rgba(150, 0, 255, 0.1) 0%, transparent 50%);
-  pointer-events: none;
-  animation: backgroundShift 20s ease-in-out infinite;
-}
-
-@keyframes backgroundShift {
-  0%, 100% { transform: translateX(0) translateY(0); }
-  25% { transform: translateX(-10px) translateY(-10px); }
-  50% { transform: translateX(10px) translateY(10px); }
-  75% { transform: translateX(-5px) translateY(15px); }
-}
-
-/* Grid pattern overlay */
-.movie-poster-generator::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-  pointer-events: none;
-  animation: gridMove 30s linear infinite;
-}
-
-@keyframes gridMove {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(50px, 50px); }
+  min-height: 80vh;
+  color: var(--text-primary);
+  font-family: var(--body-font-family);
 }
 
 .movie-poster-generator h2 {
