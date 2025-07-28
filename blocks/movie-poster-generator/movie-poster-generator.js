@@ -1,32 +1,3 @@
-export default function decorate(block) {
-  // Clear the block and add our structure
-  block.innerHTML = '';
-
-  // Add title and subtitle
-  const title = document.createElement('h2');
-  title.textContent = '🎬 AI Movie Poster Generator';
-
-  const subtitle = document.createElement('p');
-  subtitle.className = 'subtitle';
-  subtitle.textContent = 'Transform your movie ideas into stunning cinematic posters';
-
-  // Create the main studio layout
-  const posterStudio = document.createElement('div');
-  posterStudio.className = 'poster-studio';
-
-  // Create controls panel
-  const controls = createControlsPanel();
-
-  // Create preview panel
-  const preview = createPreviewPanel();
-
-  posterStudio.append(controls, preview);
-  block.append(title, subtitle, posterStudio);
-
-  // Setup event listeners
-  setupEventListeners(block);
-}
-
 function createControlsPanel() {
   const controls = document.createElement('div');
   controls.className = 'poster-controls';
@@ -99,87 +70,6 @@ function createPreviewPanel() {
   return preview;
 }
 
-function setupEventListeners(block) {
-  // Genre tag selection
-  const genreTags = block.querySelectorAll('.genre-tag');
-  genreTags.forEach((tag) => {
-    tag.addEventListener('click', () => {
-      // Toggle active state
-      genreTags.forEach((t) => t.classList.remove('active'));
-      tag.classList.add('active');
-    });
-  });
-
-  // Generate button
-  const generateBtn = block.querySelector('#generate-btn');
-  const titleInput = block.querySelector('#movie-title');
-
-  generateBtn.addEventListener('click', async () => {
-    const title = titleInput.value.trim();
-
-    if (!title) {
-      // eslint-disable-next-line no-alert
-      alert('Please enter a movie title!');
-      return;
-    }
-
-    await generatePoster(block);
-  });
-
-  // Download button
-  const downloadBtn = block.querySelector('#download-btn');
-  downloadBtn?.addEventListener('click', () => {
-    downloadPoster(block);
-  });
-
-  // Save button
-  const saveBtn = block.querySelector('#save-btn');
-  saveBtn?.addEventListener('click', () => {
-    savePosterToGallery(block);
-  });
-}
-
-async function generatePoster(block) {
-  const generateBtn = block.querySelector('#generate-btn');
-  const btnText = generateBtn.querySelector('.btn-text');
-  const posterPlaceholder = block.querySelector('#poster-placeholder');
-  const posterActions = block.querySelector('#poster-actions');
-
-  // Get form data
-  const formData = getFormData(block);
-
-  // Show loading state
-  generateBtn.disabled = true;
-  btnText.innerHTML = '<span class="loading-spinner"></span>Generating Magic...';
-
-  try {
-    // Create AI prompt
-    const prompt = createAIPrompt(formData);
-
-    // Generate image using our AI service
-    const imageUrl = await generateAIImage(prompt);
-
-    // Display the generated poster
-    posterPlaceholder.innerHTML = `<img src="${imageUrl}" alt="Generated Movie Poster" class="generated-poster">`;
-
-    // Show action buttons
-    posterActions.style.display = 'flex';
-
-    // Store the image URL for download/save
-    block.dataset.posterUrl = imageUrl;
-    block.dataset.movieData = JSON.stringify(formData);
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Error generating poster:', error);
-    // eslint-disable-next-line no-alert
-    alert('Sorry, there was an error generating your poster. Please try again!');
-  } finally {
-    // Reset button
-    generateBtn.disabled = false;
-    btnText.textContent = '🎨 Generate Poster';
-  }
-}
-
 function getFormData(block) {
   const title = block.querySelector('#movie-title').value;
   const activeGenre = block.querySelector('.genre-tag.active');
@@ -206,6 +96,65 @@ function createAIPrompt(formData) {
   prompt += ', professional movie poster design, cinematic lighting, high quality, detailed';
 
   return prompt;
+}
+
+function getFallbackImage(genre) {
+  const enhancedGenreImages = {
+    action: [
+      'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=400&h=600&fit=crop',
+    ],
+    drama: [
+      'https://images.unsplash.com/photo-1489599588768-057deb1c59c8?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400&h=600&fit=crop',
+    ],
+    horror: [
+      'https://images.unsplash.com/photo-1520637736862-4d197d17c15a?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1509909756405-be0199881695?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1445208493220-5ff17e5aac89?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1539571696142-afce887d60d0?w=400&h=600&fit=crop',
+    ],
+    comedy: [
+      'https://images.unsplash.com/photo-1514905552197-0610a4d8fd73?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=600&fit=crop',
+    ],
+    'sci-fi': [
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1514905552197-0610a4d8fd73?w=400&h=600&fit=crop',
+    ],
+    romance: [
+      'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600&fit=crop',
+    ],
+    thriller: [
+      'https://images.unsplash.com/photo-1520637836862-4d197d17c15a?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1509909756405-be0199881695?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1539571696142-afce887d60d0?w=400&h=600&fit=crop',
+    ],
+    fantasy: [
+      'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600&fit=crop',
+    ],
+  };
+
+  // Select random image from genre array
+  const genreImageArray = enhancedGenreImages[genre] || enhancedGenreImages.drama;
+  const randomImage = genreImageArray[Math.floor(Math.random() * genreImageArray.length)];
+
+  return randomImage;
 }
 
 async function generateAIImage(prompt) {
@@ -289,65 +238,6 @@ async function generateAIImage(prompt) {
   }
 }
 
-function getFallbackImage(genre) {
-  const enhancedGenreImages = {
-    action: [
-      'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=400&h=600&fit=crop',
-    ],
-    drama: [
-      'https://images.unsplash.com/photo-1489599588768-057deb1c59c8?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400&h=600&fit=crop',
-    ],
-    horror: [
-      'https://images.unsplash.com/photo-1520637736862-4d197d17c15a?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1509909756405-be0199881695?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1445208493220-5ff17e5aac89?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1539571696142-afce887d60d0?w=400&h=600&fit=crop',
-    ],
-    comedy: [
-      'https://images.unsplash.com/photo-1514905552197-0610a4d8fd73?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=600&fit=crop',
-    ],
-    'sci-fi': [
-      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1446776877081-d282a0f896e2?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1514905552197-0610a4d8fd73?w=400&h=600&fit=crop',
-    ],
-    romance: [
-      'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600&fit=crop',
-    ],
-    thriller: [
-      'https://images.unsplash.com/photo-1520637836862-4d197d17c15a?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1509909756405-be0199881695?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1539571696142-afce887d60d0?w=400&h=600&fit=crop',
-    ],
-    fantasy: [
-      'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600&fit=crop',
-    ],
-  };
-
-  // Select random image from genre array
-  const genreImageArray = enhancedGenreImages[genre] || enhancedGenreImages.drama;
-  const randomImage = genreImageArray[Math.floor(Math.random() * genreImageArray.length)];
-
-  return randomImage;
-}
-
 function downloadPoster(block) {
   const { posterUrl } = block.dataset;
   if (posterUrl) {
@@ -374,4 +264,114 @@ function savePosterToGallery(block) {
   localStorage.setItem('savedPosters', JSON.stringify(savedPosters));
   // eslint-disable-next-line no-alert
   alert('Poster saved to your gallery! 🎉');
+}
+
+async function generatePoster(block) {
+  const generateBtn = block.querySelector('#generate-btn');
+  const btnText = generateBtn.querySelector('.btn-text');
+  const posterPlaceholder = block.querySelector('#poster-placeholder');
+  const posterActions = block.querySelector('#poster-actions');
+
+  // Get form data
+  const formData = getFormData(block);
+
+  // Show loading state
+  generateBtn.disabled = true;
+  btnText.innerHTML = '<span class="loading-spinner"></span>Generating Magic...';
+
+  try {
+    // Create AI prompt
+    const prompt = createAIPrompt(formData);
+
+    // Generate image using our AI service
+    const imageUrl = await generateAIImage(prompt);
+
+    // Display the generated poster
+    posterPlaceholder.innerHTML = `<img src="${imageUrl}" alt="Generated Movie Poster" class="generated-poster">`;
+
+    // Show action buttons
+    posterActions.style.display = 'flex';
+
+    // Store the image URL for download/save
+    block.dataset.posterUrl = imageUrl;
+    block.dataset.movieData = JSON.stringify(formData);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error generating poster:', error);
+    // eslint-disable-next-line no-alert
+    alert('Sorry, there was an error generating your poster. Please try again!');
+  } finally {
+    // Reset button
+    generateBtn.disabled = false;
+    btnText.textContent = '🎨 Generate Poster';
+  }
+}
+
+function setupEventListeners(block) {
+  // Genre tag selection
+  const genreTags = block.querySelectorAll('.genre-tag');
+  genreTags.forEach((tag) => {
+    tag.addEventListener('click', () => {
+      // Toggle active state
+      genreTags.forEach((t) => t.classList.remove('active'));
+      tag.classList.add('active');
+    });
+  });
+
+  // Generate button
+  const generateBtn = block.querySelector('#generate-btn');
+  const titleInput = block.querySelector('#movie-title');
+
+  generateBtn.addEventListener('click', async () => {
+    const title = titleInput.value.trim();
+
+    if (!title) {
+      // eslint-disable-next-line no-alert
+      alert('Please enter a movie title!');
+      return;
+    }
+
+    await generatePoster(block);
+  });
+
+  // Download button
+  const downloadBtn = block.querySelector('#download-btn');
+  downloadBtn?.addEventListener('click', () => {
+    downloadPoster(block);
+  });
+
+  // Save button
+  const saveBtn = block.querySelector('#save-btn');
+  saveBtn?.addEventListener('click', () => {
+    savePosterToGallery(block);
+  });
+}
+
+export default function decorate(block) {
+  // Clear the block and add our structure
+  block.innerHTML = '';
+
+  // Add title and subtitle
+  const title = document.createElement('h2');
+  title.textContent = '🎬 AI Movie Poster Generator';
+
+  const subtitle = document.createElement('p');
+  subtitle.className = 'subtitle';
+  subtitle.textContent = 'Transform your movie ideas into stunning cinematic posters';
+
+  // Create the main studio layout
+  const posterStudio = document.createElement('div');
+  posterStudio.className = 'poster-studio';
+
+  // Create controls panel
+  const controls = createControlsPanel();
+
+  // Create preview panel
+  const preview = createPreviewPanel();
+
+  posterStudio.append(controls, preview);
+  block.append(title, subtitle, posterStudio);
+
+  // Setup event listeners
+  setupEventListeners(block);
 }
